@@ -1,0 +1,31 @@
+{
+  "id": "glm",
+  "label": "GLM",
+  "summary": "Explicit task-contract profile with stronger format and verification scaffolding.",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "GLM adapter profile is currently a local hypothesis and needs source expansion plus evals."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Format instability on loosely specified tasks",
+    "Skipping verification steps",
+    "Generic answer structure"
+  ],
+  "rules": [
+    "Use a clear task contract with required sections.",
+    "State constraints as numbered rules.",
+    "Add a final self-check against deliverables.",
+    "Keep examples short and task-specific."
+  ],
+  "allowed_terms": [
+    "glm",
+    "contract",
+    "numbered",
+    "rule",
+    "format",
+    "verification",
+    "deliverable"
+  ]
+}

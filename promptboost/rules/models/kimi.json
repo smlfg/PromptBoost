@@ -1,0 +1,38 @@
+{
+  "id": "kimi",
+  "label": "Kimi",
+  "summary": "Long-context aware prompting with explicit objectives, constraints, and step boundaries.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "Kimi prompt best practices support clear objectives and constraints; detailed failure rules are inferred."
+  ],
+  "sources": [
+    {
+      "title": "Kimi prompt best practices",
+      "url": "https://platform.kimi.ai/docs/guide/prompt-best-practice",
+      "publisher": "Moonshot AI",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Long-context drift",
+    "Weak separation of requirements and references",
+    "Losing constraints late in the output"
+  ],
+  "rules": [
+    "Put objectives, constraints, and output requirements up front.",
+    "Use section boundaries for long context.",
+    "Restate critical constraints before final output.",
+    "Mark unresolved context gaps."
+  ],
+  "allowed_terms": [
+    "kimi",
+    "long",
+    "context",
+    "objective",
+    "constraint",
+    "section",
+    "requirement"
+  ]
+}

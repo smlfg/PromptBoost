@@ -1,0 +1,45 @@
+{
+  "id": "minimax",
+  "label": "MiniMax M2.7",
+  "summary": "More explicit constraints, stronger anti-hallucination, stricter file/artifact structure.",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "MiniMax adapter rules are working hypotheses until project evals confirm them.",
+    "Official model material can support capability priors, not all listed failure modes."
+  ],
+  "sources": [
+    {
+      "title": "MiniMax M2.7",
+      "url": "https://www.minimax.io/models/text/m27",
+      "publisher": "MiniMax",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Plausible prose filling missing facts",
+    "Global synthesis before local extraction",
+    "Weak separation between supported claims and assumptions"
+  ],
+  "rules": [
+    "Use explicit constraints and negative rules.",
+    "Preserve gaps instead of filling them with plausible prose.",
+    "Require named artifacts when files or outputs are requested.",
+    "Separate supported claims, assumptions, and missing information."
+  ],
+  "allowed_terms": [
+    "minimax",
+    "m2.7",
+    "explicit",
+    "constraint",
+    "negative",
+    "hallucination",
+    "artifact",
+    "file",
+    "supported",
+    "claim",
+    "assumption",
+    "missing",
+    "information"
+  ]
+}

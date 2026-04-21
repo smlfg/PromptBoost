@@ -1,0 +1,38 @@
+{
+  "id": "gemini",
+  "label": "Gemini",
+  "summary": "Structured prompt design with clear instructions, examples, and multimodal/context boundaries.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "Google guidance supports prompt design strategies; harness-specific behavior is inferred."
+  ],
+  "sources": [
+    {
+      "title": "Gemini prompt design strategies",
+      "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
+      "publisher": "Google",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Unclear context boundaries",
+    "Missing examples for structured output",
+    "Assuming multimodal inputs are available"
+  ],
+  "rules": [
+    "State the task and output format explicitly.",
+    "Use examples when schema or style matters.",
+    "Separate context from instructions.",
+    "Do not assume unavailable media or tools."
+  ],
+  "allowed_terms": [
+    "gemini",
+    "context",
+    "example",
+    "schema",
+    "format",
+    "multimodal",
+    "instruction"
+  ]
+}

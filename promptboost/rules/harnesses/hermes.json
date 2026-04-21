@@ -1,0 +1,33 @@
+{
+  "id": "hermes",
+  "label": "Hermes",
+  "summary": "Harness-first, strict guardrails, explicit local/global separation, anti-hallucination, artifacts and ownership.",
+  "section_style": "guarded_artifacts",
+  "rules": [
+    "Separate harness policy from task facts.",
+    "Define artifact ownership before execution.",
+    "Keep local extraction separate from global synthesis.",
+    "Mark unsupported claims instead of smoothing over gaps.",
+    "Use strict guardrails for file, source, and evidence boundaries."
+  ],
+  "verification_gates": [
+    "Ownership is explicit",
+    "Local and global work are separated",
+    "Unsupported claims are listed",
+    "Artifacts are named before finalization"
+  ],
+  "allowed_terms": [
+    "harness",
+    "guardrail",
+    "artifact",
+    "ownership",
+    "local",
+    "global",
+    "separation",
+    "hallucination",
+    "source",
+    "evidence",
+    "boundary",
+    "finalization"
+  ]
+}

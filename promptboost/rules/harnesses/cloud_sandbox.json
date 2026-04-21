@@ -1,0 +1,46 @@
+{
+  "id": "cloud_sandbox",
+  "label": "Cloud Sandbox",
+  "summary": "Remote execution runtime with explicit environment constraints, artifact handoff, and reproducibility notes.",
+  "section_style": "sandbox_artifacts",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "Cloud sandbox policy is generic; concrete limits must be discovered from the active host."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": false,
+    "browser": false,
+    "approval_model": "sandbox policy",
+    "write_surface": "sandbox files and exported artifacts"
+  },
+  "failure_modes": [
+    "Assuming local machine state exists remotely",
+    "Losing generated artifacts",
+    "Skipping environment notes"
+  ],
+  "rules": [
+    "Discover environment constraints before execution.",
+    "Record commands and artifact paths.",
+    "Do not assume local credentials, services, or files exist.",
+    "Make final artifacts reproducible outside the sandbox."
+  ],
+  "verification_gates": [
+    "Environment constraints noted",
+    "Artifact paths listed",
+    "Commands are reproducible",
+    "External assumptions are flagged"
+  ],
+  "allowed_terms": [
+    "cloud",
+    "sandbox",
+    "environment",
+    "artifact",
+    "path",
+    "command",
+    "reproducible"
+  ]
+}

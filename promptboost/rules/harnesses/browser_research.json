@@ -1,0 +1,50 @@
+{
+  "id": "browser_research",
+  "label": "Browser Research",
+  "summary": "Research runtime optimized for source discovery, citation discipline, and empty-result recovery.",
+  "section_style": "research_citations",
+  "evidence_level": "inferred",
+  "claim_notes": [
+    "Research policy is inferred from general web-retrieval and citation requirements.",
+    "It does not imply any specific model can browse without the host providing tools."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": false,
+    "subagents": false,
+    "browser": true,
+    "approval_model": "network/source access",
+    "write_surface": "answer and citation artifacts"
+  },
+  "failure_modes": [
+    "Stopping after first plausible source",
+    "Weak citation coverage",
+    "Treating empty results as proof too early"
+  ],
+  "rules": [
+    "Search before answering factual or current claims.",
+    "Prefer primary sources when they exist.",
+    "Track source dates and distinguish source text from inference.",
+    "Retry weak or empty results with broader queries.",
+    "Cite evidence for concrete claims."
+  ],
+  "verification_gates": [
+    "Primary or authoritative sources checked",
+    "Claims map to cited sources",
+    "Empty-result recovery attempted when needed",
+    "Source dates reviewed"
+  ],
+  "allowed_terms": [
+    "browser",
+    "research",
+    "source",
+    "citation",
+    "primary",
+    "date",
+    "query",
+    "retrieval",
+    "evidence"
+  ]
+}

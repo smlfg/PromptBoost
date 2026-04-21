@@ -1,0 +1,43 @@
+{
+  "id": "claude",
+  "label": "Claude",
+  "summary": "Semantic phases, named sections or XML when useful, ambiguity preservation.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "Anthropic documentation supports clarity, examples, context, and long-context prompting guidance.",
+    "Claims about smoothing or early synthesis are adapter hypotheses unless backed by run logs."
+  ],
+  "sources": [
+    {
+      "title": "Claude prompting best practices",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+      "publisher": "Anthropic",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Smoothing over ambiguity",
+    "Premature high-level synthesis",
+    "Over-polishing source-grounded outputs"
+  ],
+  "rules": [
+    "Use semantic phases for context, method, output, and review.",
+    "Use clearly named sections or XML-style blocks when useful.",
+    "Preserve ambiguity instead of smoothing it away.",
+    "Keep source-grounded statements apart from interpretation."
+  ],
+  "allowed_terms": [
+    "claude",
+    "semantic",
+    "phase",
+    "context",
+    "method",
+    "xml",
+    "ambiguity",
+    "preserve",
+    "source",
+    "grounded",
+    "interpretation"
+  ]
+}

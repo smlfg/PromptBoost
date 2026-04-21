@@ -1,0 +1,49 @@
+{
+  "id": "gpt",
+  "label": "GPT / OpenAI",
+  "summary": "Concise structured spec, verification loop, stable deliverables.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "OpenAI documentation supports prompt engineering and GPT-5.4 model guidance.",
+    "Specific style and failure-mode rules remain adapter hypotheses until eval-backed."
+  ],
+  "sources": [
+    {
+      "title": "OpenAI Prompt Engineering",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+      "publisher": "OpenAI",
+      "accessed_at": "2026-04-21"
+    },
+    {
+      "title": "GPT-5.4",
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.4",
+      "publisher": "OpenAI",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Using fewer tool calls than the task needs",
+    "Over-compressing verification detail",
+    "Assuming implicit deliverables are obvious"
+  ],
+  "rules": [
+    "Prefer concise, named sections.",
+    "Keep the target outcome and acceptance checks visible.",
+    "Use one verification loop before final output.",
+    "Do not bury the raw task under redundant process text."
+  ],
+  "allowed_terms": [
+    "gpt",
+    "openai",
+    "concise",
+    "structured",
+    "section",
+    "target",
+    "acceptance",
+    "loop",
+    "stable",
+    "final",
+    "output"
+  ]
+}

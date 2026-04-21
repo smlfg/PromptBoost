@@ -1,0 +1,46 @@
+{
+  "id": "ide_assistant",
+  "label": "IDE Assistant",
+  "summary": "Editor-native runtime for narrow code edits, inline context, and low-friction verification.",
+  "section_style": "editor_actions",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "IDE policy is a host-agnostic adapter hypothesis; exact behavior depends on the editor integration."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": false,
+    "browser": false,
+    "approval_model": "editor workspace",
+    "write_surface": "open files and nearby code"
+  },
+  "failure_modes": [
+    "Ignoring surrounding code style",
+    "Editing beyond the user's selected scope",
+    "Missing compile/type feedback"
+  ],
+  "rules": [
+    "Respect the selected file and surrounding code style.",
+    "Prefer small edits with clear intent.",
+    "Do not rewrite unrelated code.",
+    "Ask for missing context only when the edit cannot be made safely."
+  ],
+  "verification_gates": [
+    "Selected scope preserved",
+    "Local style matched",
+    "No unrelated edits",
+    "Type or syntax concerns noted"
+  ],
+  "allowed_terms": [
+    "ide",
+    "editor",
+    "selection",
+    "scope",
+    "style",
+    "syntax",
+    "type"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "mistral",
+  "label": "Mistral",
+  "summary": "Direct instruction profile with compact task framing, examples, and explicit output constraints.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "Mistral prompting guidance supports clear direct prompts; detailed adapter risks are inferred."
+  ],
+  "sources": [
+    {
+      "title": "Mistral prompting",
+      "url": "https://docs.mistral.ai/studio-api/conversations/chat-completion/prompting",
+      "publisher": "Mistral AI",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Under-specified output boundaries",
+    "Too little context for complex tasks",
+    "Missing examples for format-sensitive tasks"
+  ],
+  "rules": [
+    "Keep instructions direct and compact.",
+    "Provide necessary context before constraints.",
+    "Use examples for format-sensitive outputs.",
+    "End with an explicit output contract."
+  ],
+  "allowed_terms": [
+    "mistral",
+    "direct",
+    "compact",
+    "example",
+    "context",
+    "output",
+    "contract"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "qwen",
+  "label": "Qwen",
+  "summary": "Instruction-following profile with explicit role, task, constraints, and output schema.",
+  "evidence_level": "inferred",
+  "claim_notes": [
+    "Profile uses public Qwen docs as a capability prior; adapter behavior needs local evals."
+  ],
+  "sources": [
+    {
+      "title": "Qwen documentation",
+      "url": "https://qwen.readthedocs.io/en/latest/getting_started/concepts.html",
+      "publisher": "Qwen",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Output schema drift",
+    "Under-specified constraints",
+    "Generic instruction following without task-specific checks"
+  ],
+  "rules": [
+    "Use explicit role, task, constraints, and output schema.",
+    "Keep examples close to the requested format.",
+    "Add a final schema check for structured outputs.",
+    "Avoid ambiguous section labels."
+  ],
+  "allowed_terms": [
+    "qwen",
+    "role",
+    "task",
+    "schema",
+    "format",
+    "constraint",
+    "example"
+  ]
+}

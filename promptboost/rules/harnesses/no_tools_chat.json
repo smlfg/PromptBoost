@@ -1,0 +1,45 @@
+{
+  "id": "no_tools_chat",
+  "label": "No-Tools Chat",
+  "summary": "Plain chat runtime with no external verification; must state assumptions and avoid pretending to inspect.",
+  "section_style": "assumption_first",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "This policy encodes the absence of tools rather than a model capability claim."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": false,
+    "filesystem": false,
+    "subagents": false,
+    "browser": false,
+    "approval_model": "none",
+    "write_surface": "final response only"
+  },
+  "failure_modes": [
+    "Pretending to inspect files or current sources",
+    "Overstating certainty",
+    "Giving implementation claims without execution"
+  ],
+  "rules": [
+    "Do not claim to inspect files, browse, or run commands.",
+    "State assumptions explicitly.",
+    "Ask for missing data when it materially changes the answer.",
+    "Keep outputs bounded to reasoning from provided context."
+  ],
+  "verification_gates": [
+    "No tool-use claims",
+    "Assumptions listed",
+    "Missing context flagged",
+    "Certainty calibrated"
+  ],
+  "allowed_terms": [
+    "chat",
+    "assumption",
+    "provided",
+    "context",
+    "certainty",
+    "missing"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "id": "opencode",
+  "label": "OpenCode",
+  "summary": "Harness-first coding runtime with explicit artifacts, ownership, and parallelizable work boundaries.",
+  "section_style": "guarded_artifacts",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "OpenCode-specific policy is a working adapter hypothesis based on harness-style requirements.",
+    "Use this when file ownership, subagent separation, and artifact merge boundaries matter."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": true,
+    "browser": false,
+    "approval_model": "workspace and tool permissions",
+    "write_surface": "owned files and artifacts"
+  },
+  "failure_modes": [
+    "Shared write targets between agents",
+    "Local agents creating global synthesis too early",
+    "Missing merge and review phases"
+  ],
+  "rules": [
+    "Separate harness policy from task facts.",
+    "Define artifact ownership before execution.",
+    "Keep local extraction separate from global synthesis.",
+    "Mark unsupported claims instead of smoothing over gaps.",
+    "Use strict guardrails for file, source, and evidence boundaries."
+  ],
+  "verification_gates": [
+    "Ownership is explicit",
+    "Local and global work are separated",
+    "Unsupported claims are listed",
+    "Artifacts are named before finalization"
+  ],
+  "allowed_terms": [
+    "opencode",
+    "harness",
+    "guardrail",
+    "artifact",
+    "ownership",
+    "local",
+    "global",
+    "separation",
+    "hallucination",
+    "source",
+    "evidence",
+    "boundary",
+    "finalization"
+  ]
+}

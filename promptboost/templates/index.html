@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block title %}PromptBoost Phase 2{% endblock %}
+
+{% block content %}
+<main id="workspace" class="workspace">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">PromptBoost Phase 2</p>
+      <h1>Task, Harness und Modell getrennt denken.</h1>
+    </div>
+    <p class="thesis">
+      Ein Eingabe-Prompt wird nicht magisch besser. PromptBoost übersetzt ihn in eine
+      Aufgabenspezifikation, Laufzeitregeln, ein Modellprofil und eine sichtbare
+      Evidence-/Prüfebene.
+    </p>
+  </section>
+
+  <section class="theory-strip" aria-label="PromptBoost Pipeline">
+    <article>
+      <span>01</span>
+      <h3>Raw Prompt</h3>
+      <p>Die Nutzerabsicht bleibt die Quelle der Wahrheit.</p>
+    </article>
+    <article>
+      <span>02</span>
+      <h3>Task Spec</h3>
+      <p>Ziel, Inputs, Deliverables, Constraints und offene Annahmen.</p>
+    </article>
+    <article>
+      <span>03</span>
+      <h3>Harness Policy</h3>
+      <p>Tool-, Datei-, Rollen-, Parallelitäts- und Review-Regeln der Laufzeit.</p>
+    </article>
+    <article>
+      <span>04</span>
+      <h3>Model Adapter</h3>
+      <p>Modellspezifische Promptform, Failure Modes und Guardrails.</p>
+    </article>
+    <article>
+      <span>05</span>
+      <h3>Evidence / Eval</h3>
+      <p>Doku-Prior, Inferenz, Hypothese oder später eval-bestätigte Regel.</p>
+    </article>
+  </section>
+
+  <section class="app-grid" aria-label="PromptBoost Arbeitsfläche">
+    <form id="boost-form" class="panel input-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Eingabe</p>
+          <h2>Eingabe-Prompt</h2>
+        </div>
+        <span id="status-pill" class="status-pill">bereit</span>
+      </div>
+      <textarea id="raw_prompt" name="raw_prompt" spellcheck="false" required placeholder="Prompt hier einfügen..."></textarea>
+      <div class="controls">
+        <label>
+          Laufzeitregeln
+          <select id="target_harness" name="target_harness">
+            {% for harness in harnesses %}
+            <option value="{{ harness }}" {% if harness == "codex" %}selected{% endif %}>{{ harness }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>
+          Modellprofil
+          <select id="target_model" name="target_model">
+            {% for model in models %}
+            <option value="{{ model }}" {% if model == "gpt" %}selected{% endif %}>{{ model }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button type="submit">Prompt übersetzen</button>
+      </div>
+    </form>
+
+    <section class="panel pipeline-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Prüfansicht</p>
+          <h2>Pipeline State</h2>
+        </div>
+        <span id="fact-check-pill" class="status-pill muted">nicht gelaufen</span>
+      </div>
+      <div class="pipeline">
+        <article>
+          <span>01</span>
+          <h3>Aufgabentyp</h3>
+          <p id="detected-task-type">Wartet auf Prompt.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Harness × Modell</h3>
+          <p id="selected-adapters">codex / gpt</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Evidence Level</h3>
+          <p id="evidence-level">Wird nach der Übersetzung angezeigt.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Strukturprüfung</h3>
+          <p id="readiness-score">Kein Modellbenchmark.</p>
+        </article>
+        <article>
+          <span>05</span>
+          <h3>No-New-Facts</h3>
+          <p id="fact-check-text">Der Guard läuft nach der Generierung.</p>
+        </article>
+      </div>
+      <div id="warnings" class="warnings" aria-live="polite">
+        <div class="warning meta">
+          Diese Prüfung bewertet Prompt-Struktur und Guardrails. Sie misst keine reale
+          Modellqualität, keine Output-Faithfulness und keine Laufzeitkosten.
+        </div>
+      </div>
+    </section>
+
+    <section class="panel output-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Output</p>
+          <h2>Kandidaten-Prompt</h2>
+        </div>
+        <button id="copy-output" type="button" class="secondary">Kopieren</button>
+      </div>
+      <pre id="boosted-output">Starte eine Übersetzung, um den Kandidaten-Prompt zu erzeugen.</pre>
+    </section>
+  </section>
+
+  <section class="detail-grid" aria-label="Adapter Details">
+    <section class="panel">
+      <p class="panel-kicker">Task Spec</p>
+      <h2>Aufgabenspezifikation</h2>
+      <div id="task-spec-detail" class="detail-list"></div>
+    </section>
+    <section class="panel">
+      <p class="panel-kicker">Harness Policy</p>
+      <h2>Laufzeitregeln</h2>
+      <div id="harness-detail" class="detail-list"></div>
+    </section>
+    <section class="panel">
+      <p class="panel-kicker">Model Adapter</p>
+      <h2>Modellprofil</h2>
+      <div id="model-detail" class="detail-list"></div>
+    </section>
+    <section class="panel">
+      <p class="panel-kicker">Failure Modes</p>
+      <h2>Risiko-Hypothesen</h2>
+      <div id="failure-detail" class="detail-list"></div>
+    </section>
+  </section>
+
+  <section id="matrix" class="panel matrix-panel">
+    <div class="panel-head">
+      <div>
+        <p class="panel-kicker">10 × 10 Abdeckung</p>
+        <h2>Harness × Model Matrix</h2>
+      </div>
+      <span class="status-pill">{{ harnesses|length }} × {{ models|length }} = {{ harnesses|length * models|length }}</span>
+    </div>
+    <p class="meta">
+      Die Matrix zeigt Adapter-Abdeckung, keinen Benchmark. Jede Zelle kann später eigene Run Logs,
+      Scores und eval-bestätigte Failure Modes bekommen.
+    </p>
+    <div class="matrix" role="grid" aria-label="Harness Model Matrix">
+      <div class="matrix-label corner">Harness</div>
+      {% for model in models %}
+      <div class="matrix-label">{{ model }}</div>
+      {% endfor %}
+      {% for harness in harnesses %}
+      <div class="matrix-label row-label">{{ harness }}</div>
+      {% for model in models %}
+      <button class="matrix-cell" type="button" data-harness="{{ harness }}" data-model="{{ model }}">{{ harness }} × {{ model }}</button>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="lower-grid">
+    <section id="runs" class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Lokale DB</p>
+          <h2>Letzte Übersetzungsläufe</h2>
+        </div>
+      </div>
+      <div id="runs-list" class="list-stack"></div>
+    </section>
+
+    <section id="garage" class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Read-only</p>
+          <h2>PromptGarage Samples</h2>
+        </div>
+      </div>
+      <div class="sample-search">
+        <input id="garage-query" type="search" placeholder="Samples filtern">
+        <button id="garage-search" type="button" class="secondary">Suchen</button>
+      </div>
+      <div id="garage-list" class="list-stack"></div>
+    </section>
+  </section>
+</main>
+{% endblock %}

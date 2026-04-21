@@ -1,0 +1,67 @@
+{
+  "id": "codex",
+  "label": "Codex",
+  "summary": "Outcome-first coding agent with local context inspection, scoped edits, and explicit verification.",
+  "section_style": "concise_numbered",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "Documentation supports Codex as a coding agent; exact failure modes remain adapter hypotheses until eval-backed.",
+    "Use this policy for local repo work, patch review, tests, and bounded implementation tasks."
+  ],
+  "sources": [
+    {
+      "title": "OpenAI Codex",
+      "url": "https://developers.openai.com/codex/",
+      "publisher": "OpenAI",
+      "accessed_at": "2026-04-21"
+    },
+    {
+      "title": "OpenAI Prompt Engineering",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+      "publisher": "OpenAI",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": true,
+    "browser": false,
+    "approval_model": "workspace and command permissions",
+    "write_surface": "repo files and local artifacts"
+  },
+  "failure_modes": [
+    "Stopping after analysis without verification",
+    "Touching unrelated files",
+    "Reporting checks too vaguely"
+  ],
+  "rules": [
+    "Start from the requested outcome and preserve the user's task intent.",
+    "Name concrete deliverables and quality gates.",
+    "Inspect relevant local context before changing code or claims.",
+    "Run available tests or checks and report what was verified.",
+    "Avoid unrelated refactors and unnecessary process detail."
+  ],
+  "verification_gates": [
+    "Task intent preserved",
+    "Deliverables complete",
+    "Relevant checks run or explicitly unavailable",
+    "No unsupported task facts added"
+  ],
+  "allowed_terms": [
+    "outcome",
+    "deliverable",
+    "quality",
+    "gate",
+    "test",
+    "check",
+    "verify",
+    "verification",
+    "local",
+    "context",
+    "refactor",
+    "implementation",
+    "codex"
+  ]
+}

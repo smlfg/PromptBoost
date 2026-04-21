@@ -1,0 +1,31 @@
+{
+  "id": "llama",
+  "label": "Llama",
+  "summary": "Open-model profile that benefits from explicit system boundaries, examples, and format checks.",
+  "evidence_level": "inferred",
+  "claim_notes": [
+    "Llama adapter rules are inferred from open-model prompting patterns and should be eval-backed before publication claims."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Instruction priority drift",
+    "Format drift",
+    "Weak uncertainty marking"
+  ],
+  "rules": [
+    "State instruction hierarchy explicitly.",
+    "Give one compact example when format matters.",
+    "Repeat the output format at the end.",
+    "Require uncertainty labels for unsupported claims."
+  ],
+  "allowed_terms": [
+    "llama",
+    "instruction",
+    "hierarchy",
+    "example",
+    "format",
+    "uncertainty",
+    "claim"
+  ]
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PromptBoost{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">PB</span>
+        <span>
+          <strong>PromptBoost</strong>
+          <small>Phase 2 Adapter-System</small>
+        </span>
+      </a>
+      <nav class="topnav" aria-label="Hauptnavigation">
+        <a href="#workspace">Arbeitsfläche</a>
+        <a href="#matrix">Matrix</a>
+        <a href="#runs">Läufe</a>
+        <a href="#garage">PromptGarage</a>
+      </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static', path='app.js') }}" defer></script>
+  </body>
+</html>

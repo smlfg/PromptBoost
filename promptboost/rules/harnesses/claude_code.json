@@ -1,0 +1,65 @@
+{
+  "id": "claude_code",
+  "label": "Claude Code",
+  "summary": "Plan-first terminal workflow with strong epistemic boundaries and review phases.",
+  "section_style": "principled_phases",
+  "evidence_level": "inferred",
+  "claim_notes": [
+    "Anthropic prompting guidance supports clarity, context, and long-context discipline; harness-specific behavior is inferred.",
+    "Use this policy for terminal-style analysis, refactors, and source-grounded synthesis."
+  ],
+  "sources": [
+    {
+      "title": "Claude prompting best practices",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+      "publisher": "Anthropic",
+      "accessed_at": "2026-04-21"
+    },
+    {
+      "title": "Claude long context tips",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips",
+      "publisher": "Anthropic",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": false,
+    "browser": false,
+    "approval_model": "terminal workspace permissions",
+    "write_surface": "repo files and generated artifacts"
+  },
+  "failure_modes": [
+    "Global synthesis before local grounding",
+    "Elegant smoothing of uncertainty",
+    "Over-broad refactor plans"
+  ],
+  "rules": [
+    "Begin with a brief plan grounded in discovered context.",
+    "Use principles to preserve uncertainty and task boundaries.",
+    "Keep source facts separate from inferences.",
+    "Review before final answer or final artifact.",
+    "State uncertainty instead of converting it into a claim."
+  ],
+  "verification_gates": [
+    "Plan matches the prompt",
+    "Sources and uncertainty are separated",
+    "Inferences are labeled",
+    "Final review completed"
+  ],
+  "allowed_terms": [
+    "plan",
+    "principle",
+    "epistemic",
+    "source",
+    "uncertainty",
+    "boundary",
+    "inference",
+    "review",
+    "phase",
+    "context",
+    "claude"
+  ]
+}

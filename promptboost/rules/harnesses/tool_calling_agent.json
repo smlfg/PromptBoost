@@ -1,0 +1,47 @@
+{
+  "id": "tool_calling_agent",
+  "label": "Tool-Calling Agent",
+  "summary": "Generic tool runtime that needs dependency checks, tool persistence, and structured observations.",
+  "section_style": "tool_loop",
+  "evidence_level": "inferred",
+  "claim_notes": [
+    "Policy is inferred from common tool-agent failure modes and prompt-engineering guidance.",
+    "Concrete tool names must come from the host environment, not from this adapter."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": false,
+    "subagents": false,
+    "browser": false,
+    "approval_model": "host tool policy",
+    "write_surface": "tool outputs and final response"
+  },
+  "failure_modes": [
+    "Skipping prerequisite lookup",
+    "Stopping before tool evidence is complete",
+    "Mixing tool output with inference"
+  ],
+  "rules": [
+    "Check dependencies before taking tool actions.",
+    "Use tools when they materially improve correctness.",
+    "Record observations separately from conclusions.",
+    "Retry with a different strategy when tool output is empty or partial."
+  ],
+  "verification_gates": [
+    "Prerequisite lookups completed",
+    "Tool observations recorded",
+    "Conclusions are supported by tool output",
+    "Incomplete tool results are flagged"
+  ],
+  "allowed_terms": [
+    "tool",
+    "dependency",
+    "lookup",
+    "observation",
+    "retry",
+    "output",
+    "inference"
+  ]
+}

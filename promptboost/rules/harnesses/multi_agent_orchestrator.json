@@ -1,0 +1,49 @@
+{
+  "id": "multi_agent_orchestrator",
+  "label": "Multi-Agent Orchestrator",
+  "summary": "Parallel agent runtime requiring role boundaries, disjoint write sets, synthesis gates, and review handoff.",
+  "section_style": "agent_roles",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "This is an adapter hypothesis for orchestrated agent systems and must be validated with run logs."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": true,
+    "browser": false,
+    "approval_model": "orchestrator controlled",
+    "write_surface": "agent-owned files and synthesis artifacts"
+  },
+  "failure_modes": [
+    "Duplicate or conflicting subagent work",
+    "Subagents writing outside their ownership",
+    "Synthesis before all local results arrive"
+  ],
+  "rules": [
+    "Define agent roles before parallel work starts.",
+    "Assign disjoint write sets for every worker.",
+    "Do not let local agents perform global synthesis.",
+    "Run synthesis only after all required local outputs exist.",
+    "Preserve unresolved disagreements in the review handoff."
+  ],
+  "verification_gates": [
+    "Roles defined",
+    "Write ownership disjoint",
+    "Dependencies complete before synthesis",
+    "Review handoff includes disagreements"
+  ],
+  "allowed_terms": [
+    "multi",
+    "agent",
+    "orchestrator",
+    "role",
+    "worker",
+    "parallel",
+    "synthesis",
+    "handoff",
+    "ownership"
+  ]
+}

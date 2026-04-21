@@ -1,0 +1,38 @@
+{
+  "id": "deepseek",
+  "label": "DeepSeek",
+  "summary": "Reasoning-aware profile with explicit final-answer boundaries and no hidden chain requirements.",
+  "evidence_level": "documented",
+  "claim_notes": [
+    "DeepSeek reasoner documentation supports reasoning/final-answer separation as a model prior."
+  ],
+  "sources": [
+    {
+      "title": "DeepSeek reasoner",
+      "url": "https://api-docs.deepseek.com/guides/reasoning_model",
+      "publisher": "DeepSeek",
+      "accessed_at": "2026-04-21"
+    }
+  ],
+  "eval_run_ids": [],
+  "failure_modes": [
+    "Overlong reasoning traces",
+    "Final answer missing required artifacts",
+    "Reasoning not converted into verifiable checks"
+  ],
+  "rules": [
+    "Ask for concise reasoning summaries, not hidden chain details.",
+    "Keep the final answer contract explicit.",
+    "Convert reasoning into visible checks.",
+    "Do not let exploration replace deliverables."
+  ],
+  "allowed_terms": [
+    "deepseek",
+    "reasoning",
+    "final",
+    "answer",
+    "check",
+    "contract",
+    "summary"
+  ]
+}
