@@ -1,12 +1,12 @@
 {
   "id": "browser_research",
   "label": "Browser Research",
-  "summary": "Research runtime optimized for source discovery, citation discipline, and empty-result recovery.",
+  "summary": "Current, source-grounded web research with citations, primary-source preference, quote limits, and explicit fact/inference/date boundaries.",
   "section_style": "research_citations",
   "evidence_level": "inferred",
   "claim_notes": [
     "Research policy is inferred from general web-retrieval and citation requirements.",
-    "It does not imply any specific model can browse without the host providing tools."
+    "This adapter does not imply browsing capability unless the host runtime provides browser or web tools."
   ],
   "sources": [],
   "eval_run_ids": [],
@@ -19,32 +19,77 @@
     "write_surface": "answer and citation artifacts"
   },
   "failure_modes": [
-    "Stopping after first plausible source",
+    "Stopping after the first plausible source",
     "Weak citation coverage",
-    "Treating empty results as proof too early"
+    "Treating empty results as proof too early",
+    "Mixing source-backed facts with inference",
+    "Using stale sources for date-sensitive claims"
   ],
   "rules": [
-    "Search before answering factual or current claims.",
-    "Prefer primary sources when they exist.",
-    "Track source dates and distinguish source text from inference.",
-    "Retry weak or empty results with broader queries.",
-    "Cite evidence for concrete claims."
+    "Use web or browser research only when the answer depends on current, source-specific, or externally verifiable information.",
+    "Prefer primary sources such as official documentation, regulator pages, company posts, standards bodies, datasets, papers, and direct records before secondary summaries.",
+    "Cite sources for factual claims and include links in the final answer when sources were used.",
+    "Verify date-sensitive claims against current sources and state concrete dates for events, publication dates, access dates, or relative-date corrections.",
+    "Separate source-backed facts from inference, judgment, and uncertainty.",
+    "Respect quote limits: use short excerpts only when needed, otherwise paraphrase and cite.",
+    "Do not use paid APIs, gated data, private accounts, or credentialed services unless the raw task explicitly provides access and asks for them.",
+    "When sources conflict or are insufficient, say so directly instead of smoothing over gaps."
   ],
   "verification_gates": [
-    "Primary or authoritative sources checked",
-    "Claims map to cited sources",
-    "Empty-result recovery attempted when needed",
-    "Source dates reviewed"
+    "Currentness checked for time-sensitive claims",
+    "Primary sources preferred or absence explained",
+    "Every important factual claim has source support",
+    "Facts, inferences, uncertainty, and dates are distinguishable",
+    "Quoted material is brief and necessary",
+    "No paid API, gated, or private-account dependency introduced",
+    "Source conflicts or evidence gaps are reported"
   ],
   "allowed_terms": [
     "browser",
     "research",
+    "web",
+    "current",
+    "currentness",
     "source",
+    "sources",
     "citation",
+    "cite",
+    "link",
+    "links",
     "primary",
+    "secondary",
+    "official",
+    "documentation",
+    "regulator",
+    "standard",
+    "dataset",
+    "paper",
+    "publication",
+    "access",
     "date",
-    "query",
-    "retrieval",
-    "evidence"
+    "dates",
+    "relative",
+    "claim",
+    "claims",
+    "fact",
+    "facts",
+    "inference",
+    "judgment",
+    "uncertainty",
+    "evidence",
+    "verify",
+    "verified",
+    "quote",
+    "quotes",
+    "excerpt",
+    "paraphrase",
+    "paid",
+    "api",
+    "gated",
+    "private",
+    "credentialed",
+    "conflict",
+    "gap",
+    "gaps"
   ]
 }

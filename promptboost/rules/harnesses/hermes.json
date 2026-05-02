@@ -3,6 +3,26 @@
   "label": "Hermes",
   "summary": "Harness-first, strict guardrails, explicit local/global separation, anti-hallucination, artifacts and ownership.",
   "section_style": "guarded_artifacts",
+  "evidence_level": "hypothesis",
+  "claim_notes": [
+    "Hermes policy is an adapter hypothesis for guarded local/global task orchestration."
+  ],
+  "sources": [],
+  "eval_run_ids": [],
+  "capabilities": {
+    "tools": true,
+    "filesystem": true,
+    "subagents": true,
+    "browser": false,
+    "approval_model": "harness policy",
+    "write_surface": "owned artifacts and final synthesis"
+  },
+  "failure_modes": [
+    "Local and global synthesis boundaries blur",
+    "Artifacts are merged before review",
+    "Unsupported claims are smoothed into final prose",
+    "Ownership conflicts are not resolved explicitly"
+  ],
   "rules": [
     "Separate harness policy from task facts.",
     "Define artifact ownership before execution.",
@@ -17,9 +37,12 @@
     "Artifacts are named before finalization"
   ],
   "allowed_terms": [
+    "hermes",
     "harness",
     "guardrail",
+    "guardrails",
     "artifact",
+    "artifacts",
     "ownership",
     "local",
     "global",
@@ -28,6 +51,7 @@
     "source",
     "evidence",
     "boundary",
+    "boundaries",
     "finalization"
   ]
 }

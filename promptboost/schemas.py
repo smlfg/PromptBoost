@@ -49,6 +49,43 @@ class BoostRequest(BaseModel):
     target_model: str = "gpt"
 
 
+class AgenticBoostRequest(BoostRequest):
+    pass
+
+
+class MatrixPromptRequest(BaseModel):
+    raw_prompt: str = Field(min_length=1)
+
+
+class MatrixCellRequest(MatrixPromptRequest):
+    target_harness: str = "codex"
+    target_model: str = "minimax"
+
+
+class AgenticTaskDraft(BaseModel):
+    task_type: TaskType
+    goal: str = Field(min_length=1)
+    inputs: list[str] = Field(default_factory=list)
+    deliverables: list[str] = Field(default_factory=list)
+    constraints: list[str] = Field(default_factory=list)
+    success_criteria: list[str] = Field(default_factory=list)
+    open_questions: list[str] = Field(default_factory=list)
+    assumptions: list[str] = Field(default_factory=list)
+    risk_flags: list[str] = Field(default_factory=list)
+    confidence: float = Field(ge=0, le=1)
+
+
+class AgenticBoostMetadata(BaseModel):
+    mode: Literal["llm_assist"] = "llm_assist"
+    status: Literal["accepted", "fallback"]
+    provider: str = "openai_compatible"
+    model: str | None = None
+    reason: str | None = None
+    warnings: list[str] = Field(default_factory=list)
+    task_draft: AgenticTaskDraft | None = None
+    raw_output: str | None = None
+
+
 class NoNewFactsResult(BaseModel):
     passed: bool
     harmless_meta_terms: list[str] = Field(default_factory=list)
@@ -124,6 +161,7 @@ class BoostResult(BaseModel):
     readiness_score: ReadinessScore | None = None
     matrix_cell: dict[str, str] = Field(default_factory=dict)
     input_adequacy: dict[str, Any] = Field(default_factory=dict)
+    agentic: AgenticBoostMetadata | None = None
 
 
 class BoostRun(BaseModel):

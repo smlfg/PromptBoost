@@ -71,7 +71,10 @@
             {% endfor %}
           </select>
         </label>
-        <button type="submit">Prompt übersetzen</button>
+        <div class="button-row">
+          <button id="deterministic-submit" type="submit">Deterministisch</button>
+          <button id="agentic-submit" type="button" class="secondary">Agentisch</button>
+        </div>
       </div>
     </form>
 
@@ -106,6 +109,16 @@
         </article>
         <article>
           <span>05</span>
+          <h3>Input Adequacy</h3>
+          <p id="input-adequacy">Noch nicht bewertet.</p>
+        </article>
+        <article>
+          <span>06</span>
+          <h3>Agentic Prepass</h3>
+          <p id="agentic-status">Nicht aktiv.</p>
+        </article>
+        <article>
+          <span>07</span>
           <h3>No-New-Facts</h3>
           <p id="fact-check-text">Der Guard läuft nach der Generierung.</p>
         </article>

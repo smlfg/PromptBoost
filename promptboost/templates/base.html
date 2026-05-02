@@ -6,7 +6,7 @@
     <title>{% block title %}PromptBoost{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
   </head>
-  <body>
+  <body class="{% block body_class %}{% endblock %}">
     <header class="topbar">
       <a class="brand" href="/">
         <span class="brand-mark">PB</span>
@@ -16,13 +16,15 @@
         </span>
       </a>
       <nav class="topnav" aria-label="Hauptnavigation">
-        <a href="#workspace">Arbeitsfläche</a>
-        <a href="#matrix">Matrix</a>
-        <a href="#runs">Läufe</a>
-        <a href="#garage">PromptGarage</a>
+        <a href="/#workspace">Arbeitsfläche</a>
+        <a href="/matrix-lab">Matrix Lab</a>
+        <a href="/#runs">Läufe</a>
+        <a href="/#garage">PromptGarage</a>
       </nav>
     </header>
     {% block content %}{% endblock %}
+    {% block scripts %}
     <script src="{{ url_for('static', path='app.js') }}" defer></script>
+    {% endblock %}
   </body>
 </html>

@@ -1,31 +1,31 @@
 {
   "coding_patch": {
     "label": "Coding patch",
-    "keywords": ["code", "repo", "repository", "bug", "fix", "patch", "test", "tests", "implement", "refactor", "api", "fastapi", "sqlite", "frontend", "backend"],
+    "keywords": ["code", "repo", "repository", "bug", "fix", "patch", "test", "tests", "pytest", "implement", "refactor", "api", "fastapi", "sqlite", "frontend", "backend", "fehler", "fehlgeschlagen", "repariere", "implementiere", "testlauf", "codeänderung", "codeaenderung", "datei", "modul"],
     "default_deliverables": ["Focused implementation", "Relevant tests or checks", "Verification summary"],
     "quality_gates": ["No unrelated refactors", "Existing behavior preserved", "Checks run or explained"]
   },
   "research_synthesis": {
     "label": "Research synthesis",
-    "keywords": ["research", "compare", "synthesis", "sources", "citation", "cite", "latest", "evidence", "study", "paper"],
+    "keywords": ["research", "compare", "synthesis", "sources", "citation", "cite", "latest", "evidence", "study", "paper", "recherche", "recherchiere", "quellen", "belege", "belegt", "evidenz", "studie"],
     "default_deliverables": ["Source-grounded synthesis", "Fact versus inference split", "Risks and open questions"],
     "quality_gates": ["Date-sensitive claims verified", "Sources identified", "Uncertainty preserved"]
   },
   "document_summary": {
     "label": "Document summary",
-    "keywords": ["summarize", "summary", "document", "pdf", "article", "transcript", "notes", "source-faithful", "chunk"],
+    "keywords": ["summarize", "summary", "document", "pdf", "article", "transcript", "notes", "source-faithful", "chunk", "fasse", "zusammenfassung", "dokument", "artikel", "transkript", "notizen", "quelle", "quellentreu"],
     "default_deliverables": ["Source-faithful summary", "Key points", "Unsupported or missing areas"],
     "quality_gates": ["No claims beyond source", "Coverage checked", "Ambiguity retained"]
   },
   "structured_extraction": {
     "label": "Structured extraction",
-    "keywords": ["extract", "json", "schema", "fields", "csv", "table", "structured", "parse", "yaml"],
+    "keywords": ["extract", "json", "schema", "fields", "csv", "table", "structured", "parse", "yaml", "extrahiere", "felder", "tabelle", "strukturiert"],
     "default_deliverables": ["Structured output", "Missing-value policy", "Field mapping notes"],
     "quality_gates": ["Valid format", "No invented fields", "Missing values explicit"]
   },
   "strategic_memo": {
     "label": "Strategic memo",
-    "keywords": ["strategy", "memo", "roadmap", "decision", "tradeoff", "market", "positioning", "plan", "prioritize"],
+    "keywords": ["strategy", "memo", "roadmap", "decision", "tradeoff", "market", "positioning", "plan", "prioritize", "strategie", "entscheidung", "abwägung", "abwaegung", "priorisiere"],
     "default_deliverables": ["Decision memo", "Tradeoffs", "Risks", "Next actions"],
     "quality_gates": ["Assumptions explicit", "Actions concrete", "Generic filler avoided"]
   },

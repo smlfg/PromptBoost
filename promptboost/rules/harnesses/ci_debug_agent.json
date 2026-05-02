@@ -1,7 +1,7 @@
 {
   "id": "ci_debug_agent",
   "label": "CI Debug Agent",
-  "summary": "Debugging runtime focused on failing checks, logs, minimal fixes, and regression verification.",
+  "summary": "Log-first CI debugging with reproducible failures, minimal fixes, artifact evidence, rerun boundaries, and flaky-vs-real failure separation.",
   "section_style": "debug_trace",
   "evidence_level": "inferred",
   "claim_notes": [
@@ -20,29 +20,59 @@
   "failure_modes": [
     "Fixing symptoms without reading failing logs",
     "Over-broad changes",
-    "Skipping regression checks"
+    "Skipping regression checks",
+    "Confusing flaky or infrastructure failures with code failures",
+    "Rerunning broad checks without a stated boundary"
   ],
   "rules": [
-    "Read failing logs before proposing a fix.",
-    "Identify the smallest plausible cause.",
-    "Keep the patch scoped to the failing behavior.",
-    "Run the failing check or a local equivalent before finalizing."
+    "Start from CI logs, failed check names, exit codes, stack traces, and attached artifacts before forming a fix.",
+    "Reproduce the failure locally or state exactly why local reproduction is unavailable.",
+    "Separate confirmed failures from flaky, environmental, cached, or infrastructure-related hypotheses.",
+    "Make the smallest relevant code, test, or configuration change needed to address the observed failure.",
+    "Avoid unrelated refactors, dependency churn, formatting-only edits, and broad reruns that are not tied to the failing check."
   ],
   "verification_gates": [
-    "Failing log inspected",
-    "Root cause stated",
-    "Patch is scoped",
-    "Regression check run or explicitly unavailable"
+    "Failed CI check, log evidence, or artifact evidence is identified",
+    "Local reproduction attempted or explicitly unavailable",
+    "Flaky versus real failure assessment is stated",
+    "Relevant test, command, or CI rerun boundary is documented",
+    "Fix scope is limited to the observed failure"
   ],
   "allowed_terms": [
     "ci",
     "debug",
+    "agent",
     "log",
-    "failure",
-    "regression",
-    "patch",
+    "logs",
     "check",
-    "root",
-    "cause"
+    "checks",
+    "failure",
+    "failed",
+    "exit",
+    "code",
+    "stack",
+    "trace",
+    "artifact",
+    "artifacts",
+    "evidence",
+    "reproduce",
+    "reproduction",
+    "local",
+    "rerun",
+    "boundary",
+    "flaky",
+    "environmental",
+    "infrastructure",
+    "cached",
+    "hypothesis",
+    "minimal",
+    "fix",
+    "scope",
+    "test",
+    "command",
+    "configuration",
+    "dependency",
+    "refactor",
+    "formatting"
   ]
 }

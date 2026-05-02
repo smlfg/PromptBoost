@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}PromptBoost Matrix Lab{% endblock %}
+{% block body_class %}matrix-page{% endblock %}
+
+{% block content %}
+<main id="matrix-lab" class="workspace matrix-lab">
+  <canvas id="matrix-trace-canvas" aria-hidden="true"></canvas>
+  <section class="matrix-command-bar" aria-label="Matrix Steuerung">
+    <div class="matrix-title-block">
+      <p class="eyebrow">Matrix Lab</p>
+      <h1>Heatmap</h1>
+    </div>
+    <div class="matrix-actions">
+      <span id="matrix-status" class="status-pill muted">bereit</span>
+      <button id="run-deterministic" type="button">Deterministische Matrix</button>
+      <button id="run-full-cell" type="button" class="secondary">Full-Agentic Zelle</button>
+    </div>
+  </section>
+
+  <section class="matrix-main-layout">
+    <section class="panel matrix-visual-panel matrix-heatmap-panel">
+      <div class="panel-head">
+        <div>
+          <p class="panel-kicker">Harness × Model</p>
+          <h2 id="matrix-question">Welche Kombis weichen stark vom Matrix-Mittel ab?</h2>
+        </div>
+        <div class="segmented" aria-label="Metrik wählen">
+          <button class="metric-tab is-active" type="button" data-metric="outlier">Auffällig</button>
+          <button class="metric-tab" type="button" data-metric="words">Wörter</button>
+          <button class="metric-tab" type="button" data-metric="structure">Struktur</button>
+          <button class="metric-tab" type="button" data-metric="guard">Guard</button>
+          <button class="metric-tab" type="button" data-metric="delta">Agentic Δ</button>
+        </div>
+      </div>
+
+      <div id="matrix-summary" class="matrix-summary matrix-summary-strip">
+        <article><strong>0</strong><span>Zellen</span></article>
+        <article><strong>0</strong><span>Guard Pass</span></article>
+        <article><strong>0</strong><span>Ø Wörter</span></article>
+        <article><strong>0/0</strong><span>Agentic gemessen</span></article>
+      </div>
+
+      <div class="matrix-legend" aria-label="Heatmap Legende">
+        <span>niedrig</span>
+        <i aria-hidden="true"></i>
+        <span>hoch</span>
+        <b>PASS</b>
+        <b class="risk">RISK</b>
+      </div>
+
+      <div class="matrix-heatmap-scroll">
+        <div id="matrix-grid" class="matrix-grid-lab" role="grid" aria-label="PromptBoost Matrix"></div>
+      </div>
+    </section>
+
+    <aside class="matrix-side-rail">
+      <article class="panel matrix-findings-panel">
+        <p class="panel-kicker">Findings</p>
+        <h2>Was fällt auf</h2>
+        <div id="matrix-findings" class="matrix-findings">
+          <article>
+            <strong>Noch keine Matrix</strong>
+            <p>Deterministische Matrix starten.</p>
+          </article>
+        </div>
+      </article>
+
+      <article class="panel matrix-inspector-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Zelle</p>
+            <h2>Details</h2>
+          </div>
+        </div>
+        <div class="controls matrix-cell-controls">
+          <label>
+            Harness
+            <select id="matrix-harness">
+              {% for harness in harnesses %}
+              <option value="{{ harness }}" {% if harness == "codex" %}selected{% endif %}>{{ harness }}</option>
+              {% endfor %}
+            </select>
+          </label>
+          <label>
+            Modellprofil
+            <select id="matrix-model">
+              {% for model in models %}
+              <option value="{{ model }}" {% if model == "minimax" %}selected{% endif %}>{{ model }}</option>
+              {% endfor %}
+            </select>
+          </label>
+        </div>
+        <div id="cell-detail" class="detail-list"></div>
+      </article>
+
+      <article class="panel matrix-input-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Prompt</p>
+            <h2>Testfall</h2>
+          </div>
+        </div>
+        <textarea id="matrix-prompt" spellcheck="false">{{ default_prompt }}</textarea>
+        <div id="matrix-note" class="warning meta">
+          Starte die deterministische Matrix. Danach kannst du einzelne Zellen full-agentisch gegen MiniMax testen.
+        </div>
+      </article>
+    </aside>
+  </section>
+
+  <section class="matrix-preview-dock">
+    <article class="panel">
+      <p class="panel-kicker">Deterministisch</p>
+      <h2>Scaffold Preview</h2>
+      <pre id="deterministic-preview" class="compact-pre">Noch keine Zelle ausgewählt.</pre>
+    </article>
+    <article class="panel">
+      <p class="panel-kicker">Full-Agentic</p>
+      <h2>MiniMax Preview</h2>
+      <pre id="agentic-preview" class="compact-pre">Noch kein Full-Agentic-Lauf.</pre>
+    </article>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.PROMPTBOOST_MATRIX = {
+    harnesses: {{ harnesses | tojson }},
+    models: {{ models | tojson }}
+  };
+</script>
+<script src="{{ url_for('static', path='matrix_lab.js') }}" defer></script>
+{% endblock %}

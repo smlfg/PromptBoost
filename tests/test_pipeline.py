@@ -10,6 +10,7 @@ def test_classification_covers_initial_task_types() -> None:
     assert classify_task("Extract these notes into JSON fields") == "structured_extraction"
     assert classify_task("Write a strategy memo with tradeoffs") == "strategic_memo"
     assert classify_task("Help me think through this") == "general_agent_task"
+    assert classify_task("Implement the plan.") == "general_agent_task"
 
 
 def test_adapter_selection_changes_prompt_structure() -> None:
@@ -31,6 +32,25 @@ def test_underspecified_prompt_gets_missing_information_section() -> None:
 
     assert "Missing information / assumptions" in result.boosted_prompt
     assert any("Missing information" in warning for warning in result.warnings)
+    assert result.input_adequacy["status"] == "blocked"
+    assert result.readiness_score is not None
+    assert result.readiness_score.value <= 35
+
+
+def test_default_deliverables_are_suggested_scaffolding_not_observed_intent() -> None:
+    result = boost("Help me think through this", "codex", "gpt")
+
+    assert result.task_spec["deliverables"] == []
+    assert result.task_spec["suggested_scaffolding"]["deliverables"]
+    assert "Suggested scaffolding, not user facts" in result.boosted_prompt
+
+
+def test_structured_extraction_uses_json_only_output_contract() -> None:
+    result = boost("Extract names and dates from the provided notes into JSON.", "codex", "gpt")
+
+    assert result.detected_task_type == "structured_extraction"
+    assert "Return valid JSON only" in result.boosted_prompt
+    assert "no Markdown fence or prose wrapper" in result.boosted_prompt
 
 
 def test_no_new_facts_guard_flags_domain_additions() -> None:

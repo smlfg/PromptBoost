@@ -10,12 +10,20 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from . import __version__
+from .agentic import boost_agentic
 from .config import STATIC_DIR, TEMPLATES_DIR
 from .db import init_db, list_boost_runs, save_boost_run
+from .matrix_eval import DEFAULT_MATRIX_PROMPT, deterministic_matrix, full_agentic_cell
 from .pipeline import boost
 from .promptgarage import promptgarage_available, sample_prompts
 from .rules.loader import RuleNotFoundError, available_harnesses, available_models
-from .schemas import BoostRequest, BoostResult
+from .schemas import (
+    AgenticBoostRequest,
+    BoostRequest,
+    BoostResult,
+    MatrixCellRequest,
+    MatrixPromptRequest,
+)
 
 
 @asynccontextmanager
@@ -37,6 +45,19 @@ def index(request: Request) -> HTMLResponse:
         {
             "harnesses": available_harnesses(),
             "models": available_models(),
+        },
+    )
+
+
+@app.get("/matrix-lab", response_class=HTMLResponse)
+def matrix_lab(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request,
+        "matrix_lab.html",
+        {
+            "harnesses": available_harnesses(),
+            "models": available_models(),
+            "default_prompt": DEFAULT_MATRIX_PROMPT,
         },
     )
 
@@ -67,6 +88,41 @@ def boost_route(payload: BoostRequest) -> dict[str, object]:
     if isinstance(result, dict):
         return {"result": result, "run": {"id": result.get("run_id")}}
     raise HTTPException(status_code=500, detail="Unexpected boost result")
+
+
+@app.post("/boost/agentic")
+def agentic_boost_route(payload: AgenticBoostRequest) -> dict[str, object]:
+    try:
+        result = boost_agentic(payload.raw_prompt, payload.target_harness, payload.target_model)
+    except RuleNotFoundError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    run = save_boost_run(result)
+    return {"result": result.model_dump(), "run": run.model_dump()}
+
+
+@app.post("/api/matrix/deterministic")
+def deterministic_matrix_route(payload: MatrixPromptRequest) -> dict[str, object]:
+    try:
+        return deterministic_matrix(payload.raw_prompt)
+    except RuleNotFoundError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@app.post("/api/matrix/full-cell")
+def full_agentic_cell_route(payload: MatrixCellRequest) -> dict[str, object]:
+    try:
+        return full_agentic_cell(payload.raw_prompt, payload.target_harness, payload.target_model)
+    except RuleNotFoundError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 @app.get("/api/runs")

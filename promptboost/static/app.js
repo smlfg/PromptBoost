@@ -2,12 +2,16 @@ const form = document.querySelector("#boost-form");
 const rawPrompt = document.querySelector("#raw_prompt");
 const harnessSelect = document.querySelector("#target_harness");
 const modelSelect = document.querySelector("#target_model");
+const deterministicSubmit = document.querySelector("#deterministic-submit");
+const agenticSubmit = document.querySelector("#agentic-submit");
 const statusPill = document.querySelector("#status-pill");
 const factPill = document.querySelector("#fact-check-pill");
 const detectedTaskType = document.querySelector("#detected-task-type");
 const selectedAdapters = document.querySelector("#selected-adapters");
 const evidenceLevel = document.querySelector("#evidence-level");
 const readinessScore = document.querySelector("#readiness-score");
+const inputAdequacy = document.querySelector("#input-adequacy");
+const agenticStatus = document.querySelector("#agentic-status");
 const factCheckText = document.querySelector("#fact-check-text");
 const warningsBox = document.querySelector("#warnings");
 const boostedOutput = document.querySelector("#boosted-output");
@@ -55,13 +59,14 @@ function renderWarnings(warnings) {
   }
 }
 
-async function boostPrompt(event) {
+async function boostPrompt(event, useAgentic = false) {
   event.preventDefault();
-  setStatus("läuft", "muted");
-  form.querySelector("button[type='submit']").disabled = true;
+  setStatus(useAgentic ? "agentisch läuft" : "läuft", "muted");
+  deterministicSubmit.disabled = true;
+  agenticSubmit.disabled = true;
 
   try {
-    const response = await fetch("/boost", {
+    const response = await fetch(useAgentic ? "/boost/agentic" : "/boost", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -77,13 +82,14 @@ async function boostPrompt(event) {
     const payload = await response.json();
     const result = payload.result;
     renderResult(result);
-    setStatus("gespeichert");
+    setStatus(useAgentic ? "agentisch gespeichert" : "gespeichert");
     await loadRuns();
   } catch (error) {
     setStatus("Fehler", "bad");
     factCheckText.textContent = error.message;
   } finally {
-    form.querySelector("button[type='submit']").disabled = false;
+    deterministicSubmit.disabled = false;
+    agenticSubmit.disabled = false;
   }
 }
 
@@ -92,6 +98,8 @@ function renderResult(result) {
   selectedAdapters.textContent = `${result.target_harness} / ${result.target_model}`;
   evidenceLevel.textContent = describeEvidence(result.evidence_summary);
   readinessScore.textContent = describeReadiness(result.readiness_score);
+  inputAdequacy.textContent = describeInputAdequacy(result.input_adequacy || result.task_spec?.input_adequacy);
+  agenticStatus.textContent = describeAgentic(result.agentic);
   boostedOutput.textContent = result.candidate_prompt || result.boosted_prompt;
   factCheckText.textContent = result.no_new_facts_passed
     ? "Der Guard hat keine verdächtigen neuen Domain-Begriffe gefunden."
@@ -99,6 +107,7 @@ function renderResult(result) {
   setFactStatus(result.no_new_facts_passed);
   renderWarnings(result.warnings || []);
   renderTaskSpec(result.task_spec || {});
+  renderAgenticDraft(result.agentic?.task_draft || null);
   renderRuleBlock(harnessDetail, result.harness_policy || result.adapter_rules?.harness || {});
   renderRuleBlock(modelDetail, result.model_adapter || result.adapter_rules?.model || {});
   renderFailures(result.failure_modes || []);
@@ -116,14 +125,38 @@ function describeReadiness(score) {
   return `${score.label}: ${score.value}/${score.max_value} · kein Modellbenchmark`;
 }
 
+function describeInputAdequacy(adequacy) {
+  if (!adequacy) return "Noch nicht bewertet.";
+  const cap = adequacy.score_cap ? ` · Cap ${adequacy.score_cap}` : "";
+  return `${adequacy.status}${cap} · ${adequacy.usable_without_clarification ? "direkt nutzbar" : "Klärung empfohlen"}`;
+}
+
+function describeAgentic(agentic) {
+  if (!agentic) return "Deterministische Route.";
+  const model = agentic.model ? ` · ${agentic.model}` : "";
+  const reason = agentic.reason ? ` · ${agentic.reason}` : "";
+  return `${agentic.status}${model}${reason}`;
+}
+
 function renderTaskSpec(spec) {
   taskSpecDetail.innerHTML = "";
   appendDetail(taskSpecDetail, "Goal", spec.goal || "Noch nicht erzeugt.");
   appendDetail(taskSpecDetail, "Task Type", spec.task_type || "n/a");
-  appendList(taskSpecDetail, "Deliverables", spec.deliverables || []);
+  appendList(taskSpecDetail, "Observed Deliverables", spec.deliverables || []);
+  appendList(taskSpecDetail, "Suggested Scaffolding", spec.suggested_scaffolding?.deliverables || []);
   appendList(taskSpecDetail, "Constraints", spec.constraints || []);
   appendList(taskSpecDetail, "Quality Gates", spec.quality_gates || []);
   appendList(taskSpecDetail, "Missing Information", spec.missing_information || []);
+  appendList(taskSpecDetail, "Required Clarifications", spec.input_adequacy?.required_clarifications || []);
+  appendDetail(taskSpecDetail, "Input Adequacy", spec.input_adequacy?.summary || "Noch nicht bewertet.");
+}
+
+function renderAgenticDraft(draft) {
+  if (!draft) return;
+  appendDetail(taskSpecDetail, "Agentic Draft Goal", draft.goal || "Kein Ziel.");
+  appendList(taskSpecDetail, "Agentic Deliverables", draft.deliverables || []);
+  appendList(taskSpecDetail, "Agentic Open Questions", draft.open_questions || []);
+  appendList(taskSpecDetail, "Agentic Risk Flags", draft.risk_flags || []);
 }
 
 function renderRuleBlock(target, block) {
@@ -235,7 +268,8 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-form.addEventListener("submit", boostPrompt);
+form.addEventListener("submit", (event) => boostPrompt(event, false));
+agenticSubmit.addEventListener("click", (event) => boostPrompt(event, true));
 harnessSelect.addEventListener("change", () => {
   selectedAdapters.textContent = `${harnessSelect.value} / ${modelSelect.value}`;
   highlightMatrix(harnessSelect.value, modelSelect.value);

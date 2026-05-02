@@ -1,7 +1,7 @@
 {
   "id": "no_tools_chat",
   "label": "No-Tools Chat",
-  "summary": "Plain chat runtime with no external verification; must state assumptions and avoid pretending to inspect.",
+  "summary": "Plain chat runtime with no file, browser, command, or external verification access; answers must be explicit about assumptions and limits.",
   "section_style": "assumption_first",
   "evidence_level": "documented",
   "claim_notes": [
@@ -20,26 +20,46 @@
   "failure_modes": [
     "Pretending to inspect files or current sources",
     "Overstating certainty",
-    "Giving implementation claims without execution"
+    "Giving implementation claims without execution",
+    "Claiming browsing, tests, or verification that did not happen",
+    "Guessing material missing input"
   ],
   "rules": [
-    "Do not claim to inspect files, browse, or run commands.",
-    "State assumptions explicitly.",
-    "Ask for missing data when it materially changes the answer.",
-    "Keep outputs bounded to reasoning from provided context."
+    "Do not claim to browse, inspect files, run commands, call tools, test code, verify behavior, or check current sources.",
+    "Reason only from the user-provided context and clearly separate provided facts from assumptions.",
+    "Ask for missing input when the missing detail materially changes the answer or could cause an unsafe or misleading result.",
+    "If answering with assumptions, state the assumptions before the answer and keep conclusions conditional where appropriate.",
+    "Do not invent citations, source checks, runtime observations, dates, file contents, logs, test results, or implementation status.",
+    "In the final answer, be honest about what was and was not verified, and avoid implying external access."
   ],
   "verification_gates": [
-    "No tool-use claims",
-    "Assumptions listed",
-    "Missing context flagged",
-    "Certainty calibrated"
+    "No browsing, file inspection, command execution, tool-use, or test-run claims are present",
+    "Assumptions are explicit when the prompt is underspecified",
+    "Material missing input is requested instead of guessed",
+    "Provided facts are separated from inferred or conditional guidance",
+    "Final answer states limits honestly and does not claim verification"
   ],
   "allowed_terms": [
     "chat",
+    "no-tools",
+    "tools",
+    "browse",
+    "browsing",
+    "files",
+    "commands",
+    "verify",
+    "verified",
+    "verification",
     "assumption",
+    "assumptions",
     "provided",
     "context",
-    "certainty",
-    "missing"
+    "missing",
+    "input",
+    "conditional",
+    "inferred",
+    "final",
+    "honesty",
+    "limits"
   ]
 }

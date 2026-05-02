@@ -1,7 +1,7 @@
 {
   "id": "ide_assistant",
   "label": "IDE Assistant",
-  "summary": "Editor-native runtime for narrow code edits, inline context, and low-friction verification.",
+  "summary": "Local IDE context, active file/selection boundaries, small patch discipline, confirmation for broad edits, diagnostics/tests, and workspace preservation.",
   "section_style": "editor_actions",
   "evidence_level": "hypothesis",
   "claim_notes": [
@@ -20,27 +20,57 @@
   "failure_modes": [
     "Ignoring surrounding code style",
     "Editing beyond the user's selected scope",
-    "Missing compile/type feedback"
+    "Missing compile/type feedback",
+    "Overwriting unsaved or unrelated user changes",
+    "Making broad edits without confirmation"
   ],
   "rules": [
-    "Respect the selected file and surrounding code style.",
-    "Prefer small edits with clear intent.",
-    "Do not rewrite unrelated code.",
-    "Ask for missing context only when the edit cannot be made safely."
+    "Use the active file, selection, diagnostics, and open workspace context before proposing or editing code.",
+    "Respect active selection limits; do not expand scope beyond the selected region unless the user asks or confirms.",
+    "Prefer small, reviewable patches that preserve existing style and avoid unrelated refactors.",
+    "Ask for user confirmation before broad edits, cross-file rewrites, dependency changes, or workspace-wide formatting.",
+    "Run or recommend relevant diagnostics, type checks, tests, or linters when available.",
+    "Preserve workspace state by avoiding destructive commands and by not overwriting unsaved or unrelated user changes."
   ],
   "verification_gates": [
-    "Selected scope preserved",
-    "Local style matched",
-    "No unrelated edits",
-    "Type or syntax concerns noted"
+    "Active file or selection boundary respected",
+    "Patch scope is small and reviewable",
+    "Broad edits were confirmed by the user",
+    "Diagnostics, tests, or checks were run or explicitly unavailable",
+    "Workspace state and unrelated changes preserved",
+    "No unsupported task facts added"
   ],
   "allowed_terms": [
     "ide",
-    "editor",
+    "assistant",
+    "active",
+    "file",
     "selection",
+    "diagnostic",
+    "diagnostics",
+    "workspace",
+    "context",
+    "patch",
     "scope",
+    "reviewable",
     "style",
-    "syntax",
-    "type"
+    "refactor",
+    "confirmation",
+    "confirm",
+    "cross-file",
+    "dependency",
+    "formatting",
+    "test",
+    "tests",
+    "check",
+    "checks",
+    "type",
+    "lint",
+    "linter",
+    "preserve",
+    "state",
+    "unsaved",
+    "unrelated",
+    "destructive"
   ]
 }
